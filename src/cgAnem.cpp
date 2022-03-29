@@ -112,12 +112,10 @@ bool ClimateGuard_Anem::getSensorStatus()
     uint8_t statusReg;
     if (register_read_byte((uint8_t)i2c_reg_STATUS, &statusReg))
     {
-        unsteadyProcess = statusReg & (1 << STUP);
         overVcc = statusReg & (1 << STOV);
         taringError = (statusReg & (1 << STITR)) | (statusReg & (1 << STIT));
         return true;
     }
-    unsteadyProcess = false;
     overVcc = false;
     taringError = false;
     return false;
