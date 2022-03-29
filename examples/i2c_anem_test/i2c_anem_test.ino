@@ -34,7 +34,7 @@ void setup()
 
   Serial.println("-------------------------------------");
   Serial.println("try to set the duct area for flow consumption calculations");
-  cgAnem.set_duct_area(100); //set duct area for flow consumption calculation in sm^2. If duct area not seted cgAnem.airConsumption will be -255 (default value)
+  cgAnem.set_duct_area(100); //set here duct area for flow consumption calculation in sm^2. If duct area not seted cgAnem.airConsumption will be -255 (default value)
   Serial.println("Duct area setted as " + String(cgAnem.ductArea) + " sm^2");
   delay(3000);
 }
@@ -47,10 +47,6 @@ void loop()
     Serial.println("Air flow rate: " + String(cgAnem.airflowRate) + " m/s");
     Serial.println("Current temperature: " + String(cgAnem.temperature) + " C");
     Serial.println("Air flow consumption:" + String(cgAnem.airConsumption) + " m^3/hour");
-    if (cgAnem.unsteadyProcess)
-      Serial.println("the sensor is in unstable process and not stabilise");
-    else
-      Serial.println("the sensor is stabilise");
   }
   else
     checkCgAnem();
