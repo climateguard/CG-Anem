@@ -42,7 +42,6 @@
 #define STIT 0x6  //bit num - calibration error
 #define STWDT 0x5 //bit num - watchdog on/off
 #define STOV 0x1  //bit num - over voltage
-#define STUP 0x0  //bit num - unstable process
 /*STATUS REGISTER BITS end*/
 
 class ClimateGuard_Anem
@@ -60,10 +59,9 @@ public:
     float temperature = -255;    //temperature
     float airConsumption = -255; //flow consumption
     float airflowRate = -255;    //flow rate
-    bool unsteadyProcess = true; //transition process
-    bool overVcc = true;         //over voltage
+    bool overVcc = true;         //overvoltage
     bool taringError = true;     //calibration error
-    float ductArea;              //duct area in sm^2
+    float ductArea;              //duct area in sm^2. Necessary to set a value in the main code for air flow calculations
 
     //Methods for get or set data
     bool init();
