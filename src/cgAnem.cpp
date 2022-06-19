@@ -26,7 +26,7 @@ bool ClimateGuard_Anem::data_update()
     bool status = getSensorStatus();
     if (overVcc || !status)
         return false;
-    temperature = getTemperuture();
+    temperature = getTemperature();
     airflowRate = getAirflowRate();
     airConsumption = calculateAirConsumption();
     return true;
@@ -62,7 +62,7 @@ uint8_t ClimateGuard_Anem::getFirmwareVersion()
 }
 
 /*get current temperature*/
-float ClimateGuard_Anem::getTemperuture()
+float ClimateGuard_Anem::getTemperature()
 {
     uint8_t raw[2];
     if (register_read_byte((uint8_t)i2c_reg_TEMP_COLD_H, &raw[0]))
