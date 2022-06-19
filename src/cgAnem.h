@@ -68,7 +68,7 @@ public:
     bool data_update(void);
     uint8_t getChipId();
     uint8_t getFirmwareVersion();
-    float getTemperuture();
+    float getTemperature();
     float getAirflowRate();
     void set_duct_area(float area);
     float calculateAirConsumption();
