@@ -44,9 +44,9 @@ void loop()
 {
   if (cgAnem.data_update())
   {
-    Serial.println("Air flow rate: " + String(cgAnem.airflowRate) + " m/s");
-    Serial.println("Current temperature: " + String(cgAnem.temperature) + " C");
-    Serial.println("Air flow consumption:" + String(cgAnem.calculateAirConsumption) + " m^3/hour");
+    Serial.println("Air flow rate: " + String(cgAnem.getAirflowRate()) + " m/s");
+    Serial.println("Current temperature: " + String(cgAnem.getTemperature()) + " C");
+    Serial.println("Air flow consumption:" + String(cgAnem.calculateAirConsumption()) + " m^3/hour");
   }
   else
     checkCgAnem();
