@@ -1,1 +1,14 @@
 #CG_Anem keywords
+
+cgAnem  KEYWORD1
+
+init  KEYWORD2
+data_update KEYWORD2
+getChipId KEYWORD2
+getFirmwareVersion  KEYWORD2
+getSensorStatus KEYWORD2
+getTemperature  KEYWORD2
+getAirFlowRate  KEYWORD2
+calculateAirConsumption KEYWORD2
+set_duct_area KEYWORD2
+register_read_byte  KEYWORD2
