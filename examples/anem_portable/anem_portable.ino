@@ -1,92 +1,88 @@
-//Инициализируем библиотеки
-#include <Arduino.h>
+// Инициализируем библиотеки
 #include <cgAnem.h>
-#include <SPI.h>
-#include <TFT_eSPI.h>
 #include <Wire.h>
+#include <GyverOLED.h>
+#define ADC_pin A0 // задаём значение пина АЦП
 
-#define ADC_pin 34 //задаём значение пина АЦП
-
+GyverOLED<SSD1306_128x64, OLED_NO_BUFFER> oled; // Инициализируем OLED-экран
 ClimateGuard_Anem cgAnem(ANEM_I2C_ADDR); // Инициализируем CG_Anem
-TFT_eSPI tft = TFT_eSPI();  // Инициализируем дисплей
 
-uint32_t ADC;  // Переменная для значений АЦП
-uint32_t timer_meas; // Таймер для измерений анемометра
-uint32_t timer_bat;  // Таймер для измерения заряда батареи
+uint16_t ADC; // Переменная для значений АЦП
+uint32_t timer_cnt; // Таймер для измерений анемометра
+uint32_t timer_bat; // Таймер для измерения заряда батареи
 
-// Функция используется для мигания индикатора батареи при низком заряде
-void lowbat(int del) {
-  tft.fillRect(87, 12, 9, 8, 0xFFFF);
-  delay(del);
-  tft.fillRect(87, 12, 9, 8, 0x0000);
-  delay(del);
-}
-
-//Инициализируем дисплей и анемометр для дальнейшей работы
 void setup() {
-  Wire.begin(); 
+  pinMode(ADC_pin, OUTPUT); // Инициализируем АЦП как получатель данных
+  oled.init(); // Инициализируем OLED в коде
+  oled.flipV(1); // Я перевернул экран для удобства
+  oled.flipH(1); // Для нормального отображения после переворота нужно инвертировать текст по горизонтали
+  oled.clear();
+  oled.setScale(2); // Устанавливаем размер шрифта
+  oled.setCursor(20, 3);
+  oled.print("CG_Anem");
+  delay(1500);
   cgAnem.init();
-  tft.init();
-  tft.setRotation(0); // Задаём книжную ориентацию дисплея
-  tft.fillScreen(TFT_BLACK); // Чистим дисплей
-  tft.setTextColor( TFT_WHITE, TFT_BLACK); // Задаём цвет шрифта и фона
+  oled.clear();
   cgAnem.set_duct_area(100); // Задаём площадь поперечного сечения для расчёта расхода. Меняется программно, измеряется в см^2
-  
-  // Функция таймера служит для предварительного нагрева анемометра перед использованием
-  for(int i = 10; i > 0; i--){
-    tft.setTextSize(3);
-    tft.setCursor(50, 110);
-    tft.print(i);
+  for (int i = 10; i >= 0; i--) { // Функция таймера служит для предварительного нагрева анемометра перед использованием
+    oled.setCursor(55, 3);
+    oled.print(i);
     delay(1000);
-    tft.fillScreen(TFT_BLACK);
+    oled.clear();
   }
-  
-  tft.setTextSize(1); //Задаём размер шрифта 
+  delay(1000);
+  oled.clear();
+  oled.setScale(1);
 }
+
 void loop() {
-  //Каждую секунду происходит опрос анемометра и вывод новых параметров
-  if (millis() - timer_meas > 1000) { 
-    timer_meas = millis();
-    char buf1[20];
-    char buf2[20];
-    sprintf(buf1, "V: %.1f ", cgAnem.getAirflowRate()); // Создаём буферы для более удобного выведения на экран
-    sprintf(buf2, "T: %.1f ", cgAnem.getTemperature());
+  if (millis() - timer_cnt > 1000) { // Снимаем показания с анемометра и выводим их на экран
+    timer_cnt = millis();
     // Проверяем, обновляются ли данные с анемометра. Если да - выводим их, если нет - предупреждаем об ошибке
     if (cgAnem.data_update()) {
-      tft.drawString(buf1, 10, 50, 2);
-      tft.drawString("m/s", 60, 50, 2);
-      tft.drawString(buf2, 10, 108, 2);
-      tft.drawString("C", 60, 108, 2);
-      tft.drawString("Consumption:", 10, 158, 2); // Расход не получилось уместить в одну строчку, поэтому его мы выводим отдельно
-      tft.drawString(String(cgAnem.calculateAirConsumption()), 10, 185, 2);
-      tft.drawString("m3/h", 60, 185, 2);
+      char buf1[50];
+      char buf2[50];
+      char buf3[50];
+      sprintf(buf1, "V: %.1f m/s ", cgAnem.getAirflowRate()); // Собираем строку с показаниями скорости потока
+      sprintf(buf2, "T: %.1f C ", cgAnem.getTemperature()); // Собираем строку с показаниями температуры
+      sprintf(buf3, "Cons: %.1f m^3/h ", cgAnem.calculateAirConsumption()); // Собираем строку с показаниями расхода воздуха, исходя из заданного сечения. Расход воздуха измеряется в м^3/час
+      oled.setCursor(0, 1);
+      oled.print(buf1);
+      oled.setCursor(0, 3);
+      oled.print(buf2);
+      oled.setCursor(0, 5);
+      oled.print(buf3);
     }
     else {
-      tft.drawString("ERROR" , 0, 150, 2);
+      oled.setCursor(45, 3);
+      oled.print("ERROR");
     }
   }
-  //Опрашиваем АЦП каждые 5 секунд и при изменении показателей изменяем текущий уровень заряда
-  if (millis() - timer_bat > 5000) {
+
+  if (millis() - timer_bat > 10000) { //
     timer_bat = millis();
-    ADC = analogRead(ADC_pin);
-    tft.drawRect(85, 10, 40, 12, 0xFFFF);
-    tft.fillRect(125, 13, 4, 6, 0xFFFF);
-    if (ADC >= 1600) {
-      tft.drawString("100%", 5, 9, 2);
-      tft.fillRect(87, 12, 36, 8, 0xFFFF);
+    ADC = analogRead(ADC_pin); // Считываем показание с АЦП
+    oled.rect(104, 3, 124, 10, OLED_STROKE); // Рисуем иконку батарейки
+    oled.rect(125, 5, 127, 8, OLED_FILL);
+    if (ADC >= 970) {
+      oled.rect(104, 3, 124, 10, OLED_FILL);
+      oled.setCursor(6, 1);
+      oled.setCursor(104, 2);
+      oled.print("100%");
     }
-    if (ADC <= 1600 && ADC >= 1500) {
-      tft.drawString("75%", 5, 9, 2);
-      tft.fillRect(87, 12, 27, 8, 0xFFFF);
+    if (ADC < 970 && ADC >= 870) {
+      oled.rect(106, 3, 119, 10, OLED_FILL);
+      oled.setCursor(104, 2);
+      oled.print("75%");
     }
-    if (ADC <= 1500 && ADC >= 1450) {
-      tft.drawString("25%", 5, 9, 2);
-      tft.fillRect(87, 12, 9, 8, 0xFFFF);
+    if (ADC < 870 && ADC >= 770) {
+      oled.rect(106, 3, 114, 10, OLED_FILL);
+      oled.setCursor(104, 2);
+      oled.print("50%");
     }
-    if (ADC <= 1450 ) {
-      tft.setTextColor(TFT_RED);
-      tft.drawString("LOW", 5, 9, 2);
-      lowbat(1000);
+    if (ADC < 770) {
+      oled.setCursor(104, 2);
+      oled.print("LOW");
     }
   }
 }
