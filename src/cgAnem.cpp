@@ -13,7 +13,7 @@ ClimateGuard_Anem::~ClimateGuard_Anem()
 bool ClimateGuard_Anem::init()
 {
     Wire.begin();
-    Wire.beginTransmission(_sensor_address); //safety check, make sure the sensor is connected
+    Wire.beginTransmission(_sensor_address); // safety check, make sure the sensor is connected
     Wire.write(i2c_reg_WHO_I_AM);
     if (Wire.endTransmission(true) != 0)
         return false;
@@ -23,13 +23,10 @@ bool ClimateGuard_Anem::init()
 /*get new necessary data*/
 bool ClimateGuard_Anem::data_update()
 {
-    bool status = getSensorStatus();
-    if (overVcc || !status)
-        return false;
     temperature = getTemperature();
     airflowRate = getAirflowRate();
     airConsumption = calculateAirConsumption();
-    return true;
+    return getSensorStatus() ? false : true; // check data relevance
 }
 
 /*read 1 byte from register*/
@@ -106,17 +103,16 @@ float ClimateGuard_Anem::calculateAirConsumption()
     return -255;
 }
 
-/*get data from status register*/
+/*get data from status register
+ *true - unsteady process, measurements not prepared
+ *false - transient process finished, measurements are relevant*/
 bool ClimateGuard_Anem::getSensorStatus()
 {
     uint8_t statusReg;
+    bool stupBit = 0;
     if (register_read_byte((uint8_t)i2c_reg_STATUS, &statusReg))
     {
-        overVcc = statusReg & (1 << STOV);
-        taringError = (statusReg & (1 << STITR)) | (statusReg & (1 << STIT));
-        return true;
+        stupBit = statusReg & (1 << STUP);
     }
-    overVcc = false;
-    taringError = false;
-    return false;
+    return stupBit;
 }

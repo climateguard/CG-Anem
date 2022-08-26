@@ -5,23 +5,14 @@
 
 ClimateGuard_Anem cgAnem(ANEM_I2C_ADDR);
 
-void checkCgAnem()
-{
-
-  if (cgAnem.overVcc)
-    Serial.println("the input voltage is too high and module goes to defence");
-  else
-    Serial.println("Sensor wiring error");
-}
-
 void setup()
 {
   Serial.begin(115200);
   delay(1000);
   if (cgAnem.init()) //try to init the sensor module
-  {
     Serial.println("Sensor secsessfully found");
-  }
+  else
+    Serial.println("Sensor wiring error");
 
   uint8_t sensorChipId = cgAnem.getChipId(); /*Returns chip id, default value: 0x11.*/
 
@@ -47,8 +38,9 @@ void loop()
     Serial.println("Air flow rate: " + String(cgAnem.getAirflowRate()) + " m/s");
     Serial.println("Current temperature: " + String(cgAnem.getTemperature()) + " C");
     Serial.println("Air flow consumption:" + String(cgAnem.calculateAirConsumption()) + " m^3/hour");
+    
   }
   else
-    checkCgAnem();
+    Serial.println("transient process do not finished, measurements are not relevant");
   delay(1000);
 }

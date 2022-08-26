@@ -35,13 +35,11 @@
 #define i2c_reg_STATUS_W 0x06
 #define i2c_reg_dT_H 0x14
 #define i2c_reg_dT_L 0x15
-/*I2C REGISTERS ADDRESSES end*/
 
-/*STATUS REGISTER BITS begin*/
-#define STITR 0x7 //bit num - сalibration volume error
-#define STIT 0x6  //bit num - calibration error
+/*I2C REGISTERS ADDRESSES end*/
+#define STUP 0x0  //bit num - unsteady process
 #define STWDT 0x5 //bit num - watchdog on/off
-#define STOV 0x1  //bit num - over voltage
+
 /*STATUS REGISTER BITS end*/
 
 class ClimateGuard_Anem
@@ -59,8 +57,6 @@ public:
     float temperature = -255;    //temperature
     float airConsumption = -255; //flow consumption
     float airflowRate = -255;    //flow rate
-    bool overVcc = true;         //overvoltage
-    bool taringError = true;     //calibration error
     float ductArea;              //duct area in sm^2. Necessary to set a value in the main code for air flow calculations
 
     //Methods for get or set data
