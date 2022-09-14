@@ -31,10 +31,15 @@
 #define i2c_reg_TEMP_COLD_L 0x11
 #define i2c_reg_TEMP_HOT_H 0x12
 #define i2c_reg_TEMP_HOT_L 0x13
-#define i2c_reg_NULL 0xFF
-#define i2c_reg_STATUS_W 0x06
 #define i2c_reg_dT_H 0x14
 #define i2c_reg_dT_L 0x15
+#define i2c_reg_ADDRESS 0x20
+#define i2c_reg_WIND_MAX_H 0x21
+#define i2c_reg_WIND_MAX_L 0x22
+#define i2c_reg_WIND_MIN_H 0x23
+#define i2c_reg_WIND_MIN_L 0x24
+#define i2c_reg_RESET_WIND 0x25
+//#define i2c_reg_NULL 0xFF
 
 /*I2C REGISTERS ADDRESSES end*/
 #define STUP 0x0  //bit num - unsteady process
