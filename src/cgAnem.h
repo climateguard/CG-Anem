@@ -39,15 +39,13 @@
 #define i2c_reg_WIND_MIN_H 0x23
 #define i2c_reg_WIND_MIN_L 0x24
 #define i2c_reg_RESET_WIND 0x25
-//#define i2c_reg_NULL 0xFF
 
 /*I2C REGISTERS ADDRESSES end*/
-#define STUP 0x0  //bit num - unsteady process
-#define STWDT 0x5 //bit num - watchdog on/off
+#define STUP 0x0  // bit num - unsteady process
 
 /*STATUS REGISTER BITS end*/
 
-class ClimateGuard_Anem
+class CG_Anem
 {
 private:
     uint8_t _sensor_address;
@@ -55,26 +53,31 @@ private:
     uint8_t _firmware_ver;
 
 public:
-    ClimateGuard_Anem(uint8_t sensorAddress);
-    ~ClimateGuard_Anem();
+    CG_Anem(uint8_t sensorAddress);
+    ~CG_Anem();
 
-    //Fields of data, for update use data_update() function
-    float temperature = -255;    //temperature
-    float airConsumption = -255; //flow consumption
-    float airflowRate = -255;    //flow rate
-    float ductArea;              //duct area in sm^2. Necessary to set a value in the main code for air flow calculations
+    // Fields of data, for update use data_update() function
+    float temperature = -255;    // temperature
+    float airConsumption = -255; // flow consumption
+    float airflowRate = -255;    // flow rate
+    float ductArea;              // duct area in sm^2. Necessary to set a value in the main code for air flow calculations
 
-    //Methods for get or set data
+    // Methods for get or set data
     bool init();
     bool data_update(void);
     uint8_t getChipId();
-    uint8_t getFirmwareVersion();
+    float getFirmwareVersion();
     float getTemperature();
     float getAirflowRate();
     void set_duct_area(float area);
     float calculateAirConsumption();
     bool getSensorStatus();
     bool register_read_byte(uint8_t regAddr, uint8_t *retrieveData);
+    bool register_write_byte(uint8_t regAddr, uint8_t regData);
+    bool setI2Caddr(uint8_t newAddr);
+    bool resetMinMaxValues();
+    float getMaxAirFlowRate();
+    float getMinAirFlowRate();
 };
 
 #endif // _CGANEM_H_

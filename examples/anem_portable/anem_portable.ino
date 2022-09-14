@@ -1,11 +1,11 @@
 // Инициализируем библиотеки
-#include <cgAnem.h>
+#include "cgAnem.h"
 #include <Wire.h>
 #include <GyverOLED.h>
 #define ADC_pin A0 // задаём значение пина АЦП
 
 GyverOLED<SSD1306_128x64, OLED_NO_BUFFER> oled; // Инициализируем OLED-экран
-ClimateGuard_Anem cgAnem(ANEM_I2C_ADDR); // Инициализируем CG_Anem
+CG_Anem cgAnem(ANEM_I2C_ADDR); // Инициализируем CG_Anem
 
 uint16_t ADC; // Переменная для значений АЦП
 uint32_t timer_cnt; // Таймер для измерений анемометра
