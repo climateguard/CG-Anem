@@ -36,8 +36,6 @@ bool CG_Anem::data_update()
     heatPower = getheatPower();
     voltagesupply = getVoltageSupply();
     return getSensorStatus() ? false : true; // check data relevance
-    return getSensorOVStatus() ? false : true; // 
-    return getSensorWDTStatus() ? false : true; // 
 }
 
 /*read 1 byte from register*/
