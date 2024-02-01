@@ -41,7 +41,9 @@
 #define i2c_reg_RESET_WIND 0x25
 
 /*I2C REGISTERS ADDRESSES end*/
-#define STUP 0x0  // bit num - unsteady process
+#define STUP 0x0   // bit num - unsteady process
+#define STOV 0x1   // bit num - status overvoltage
+#define STWDT 0x5  // bit num - status watchdog timer (read/write)
 
 /*STATUS REGISTER BITS end*/
 
@@ -51,33 +53,53 @@ private:
     uint8_t _sensor_address;
     uint8_t _chip_id;
     uint8_t _firmware_ver;
+    uint8_t _factory_id_1;
+    uint8_t _factory_id_2;
+    uint8_t _factory_id_3;
+    uint8_t _factory_id_4;
 
 public:
     CG_Anem(uint8_t sensorAddress);
     ~CG_Anem();
 
     // Fields of data, for update use data_update() function
-    float temperature = -255;    // temperature
-    float airConsumption = -255; // flow consumption
-    float airflowRate = -255;    // flow rate
-    float ductArea;              // duct area in sm^2. Necessary to set a value in the main code for air flow calculations
+    float temperature = -255;     // temperature
+    float coldtemperature = -255; // coldtemperature
+    float hottemperature = -255;  // hottemperature
+    float airConsumption = -255;  // flow consumption
+    float airflowRate = -255;     // flow rate
+    float heatPower = -255;       // heater power
+    float voltagesupply = -255;   // voltage supply
+    float ductArea;               // duct area in sm^2. Necessary to set a value in the main code for air flow calculations
 
     // Methods for get or set data
     bool init();
     bool data_update(void);
     uint8_t getChipId();
+    uint8_t getFactoryId1();
+    uint8_t getFactoryId2();
+    uint8_t getFactoryId3();
+    uint8_t getFactoryId4();
     float getFirmwareVersion();
     float getTemperature();
+    float getColdTemperature();
+    float getHotTemperature();
+    float getheatPower();
+    float getVoltageSupply();
     float getAirflowRate();
-    void set_duct_area(float area);
     float calculateAirConsumption();
+    float getMaxAirFlowRate();
+    float getMinAirFlowRate();
     bool getSensorStatus();
+    bool getSensorOVStatus();
+    bool getSensorWDTStatus();
     bool register_read_byte(uint8_t regAddr, uint8_t *retrieveData);
     bool register_write_byte(uint8_t regAddr, uint8_t regData);
     bool setI2Caddr(uint8_t newAddr);
     bool resetMinMaxValues();
-    float getMaxAirFlowRate();
-    float getMinAirFlowRate();
+    bool enableWDT();
+    bool disableWDT();
+    void set_duct_area(float area);
 };
 
 #endif // _CGANEM_H_
