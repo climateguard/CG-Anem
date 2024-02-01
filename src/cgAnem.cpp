@@ -18,6 +18,10 @@ bool CG_Anem::init()
     if (Wire.endTransmission(true) != 0)
         return false;
     getFirmwareVersion();
+    getFactoryId1();
+    getFactoryId2();
+    getFactoryId3();
+    getFactoryId4();
     return true;
 }
 
@@ -25,9 +29,15 @@ bool CG_Anem::init()
 bool CG_Anem::data_update()
 {
     temperature = getTemperature();
+    coldtemperature = getColdTemperature();
+    hottemperature = getHotTemperature();
     airflowRate = getAirflowRate();
     airConsumption = calculateAirConsumption();
+    heatPower = getheatPower();
+    voltagesupply = getVoltageSupply();
     return getSensorStatus() ? false : true; // check data relevance
+    return getSensorOVStatus() ? false : true; // 
+    return getSensorWDTStatus() ? false : true; // 
 }
 
 /*read 1 byte from register*/
@@ -57,6 +67,36 @@ bool CG_Anem::register_write_byte(uint8_t regAddr, uint8_t regData)
     }
     return true;
 }
+
+
+/*Get factory_id_1.*/
+uint8_t CG_Anem::getFactoryId1()
+{
+    register_read_byte(uint8_t(i2c_reg_FACTORY_ID_1), &_factory_id_1);
+    return _factory_id_1;
+}
+
+/*Get factory_id_2.*/
+uint8_t CG_Anem::getFactoryId2()
+{
+    register_read_byte(uint8_t(i2c_reg_FACTORY_ID_2), &_factory_id_2);
+    return _factory_id_2;
+}
+
+/*Get factory_id_3.*/
+uint8_t CG_Anem::getFactoryId3()
+{
+    register_read_byte(uint8_t(i2c_reg_FACTORY_ID_3), &_factory_id_3);
+    return _factory_id_3;
+}
+
+/*Get factory_id_4.*/
+uint8_t CG_Anem::getFactoryId4()
+{
+    register_read_byte(uint8_t(i2c_reg_FACTORY_ID_4), &_factory_id_4);
+    return _factory_id_4;
+}
+
 /*Get chip id, default value: 0x11.*/
 uint8_t CG_Anem::getChipId()
 {
@@ -72,13 +112,45 @@ float CG_Anem::getFirmwareVersion()
     return ver;
 }
 
-/*get current temperature*/
-float CG_Anem::getTemperature()
+/*Get getsupplyV.*/
+float CG_Anem::getVoltageSupply()
+{
+    register_read_byte(uint8_t(i2c_reg_SUPPLY_V), &_supply_v);
+    float tmp = _supply_v / 10.0;
+    return tmp;
+}
+
+/*Get getheatPower.*/
+float CG_Anem::getheatPower()
+{
+    register_read_byte(uint8_t(i2c_reg_PWR_WT), &_heatpwr);
+ /*   float tmp = _heatpwr / 10.0;  */
+	float tmp = (_heatpwr * 1.36125) / 255;
+    return tmp;
+}
+
+/*get current Coldend Temperature*/
+float CG_Anem::getColdTemperature()
 {
     uint8_t raw[2];
     if (register_read_byte((uint8_t)i2c_reg_TEMP_COLD_H, &raw[0]))
     {
         if (register_read_byte((uint8_t)i2c_reg_TEMP_COLD_L, &raw[1]))
+        {
+            int16_t tmp = (raw[0] << 8) | raw[1];
+            return tmp / 10.0;
+        }
+    }
+    return -255;
+}
+
+/*get current Hotend Temperature*/
+float CG_Anem::getHotTemperature()
+{
+    uint8_t raw[2];
+    if (register_read_byte((uint8_t)i2c_reg_TEMP_HOT_H, &raw[0]))
+    {
+        if (register_read_byte((uint8_t)i2c_reg_TEMP_HOT_L, &raw[1]))
         {
             int16_t tmp = (raw[0] << 8) | raw[1];
             return tmp / 10.0;
@@ -129,6 +201,34 @@ bool CG_Anem::getSensorStatus()
         stupBit = statusReg & (1 << STUP);
     }
     return stupBit;
+}
+
+/*get data from status register stovBit
+ *true - overvoltage detected
+ *false - supply voltage is normal*/
+bool CG_Anem::getSensorOVStatus()
+{
+    uint8_t statusReg;
+    bool stovBit = 0;
+    if (register_read_byte((uint8_t)i2c_reg_STATUS, &statusReg))
+    {
+        stovBit = statusReg & (1 << STOV);
+    }
+    return stovBit;
+}
+
+/*get data from status register stwdtBit
+ *true - wdt enable
+ *false - wdt disable*/
+bool CG_Anem::getSensorWDTStatus()
+{
+    uint8_t statusReg;
+    bool stwdtBit = 0;
+    if (register_read_byte((uint8_t)i2c_reg_STATUS, &statusReg))
+    {
+        stwdtBit = statusReg & (1 << STWDT);
+    }
+    return stwdtBit;
 }
 
 /*change i2c address of sensor
@@ -189,6 +289,26 @@ bool CG_Anem::resetMinMaxValues()
     if (_firmware_ver >= 10) // method available since version 1.0
     {
         if (register_write_byte(i2c_reg_RESET_WIND, (uint8_t)0x1))
+            return true;
+    }
+    return false;
+}
+
+/*Enable WatchDog Timer*/
+bool CG_Anem::enableWDT()
+{
+    {
+        if (register_write_byte(i2c_reg_STATUS, (uint8_t)0x10))
+            return true;
+    }
+    return false;
+}
+
+/*Disable WatchDog Timer*/
+bool CG_Anem::disableWDT()
+{
+    {
+        if (register_write_byte(i2c_reg_STATUS, (uint8_t)0x0))
             return true;
     }
     return false;
