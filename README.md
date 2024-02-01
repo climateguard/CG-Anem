@@ -1,4 +1,4 @@
-# [](https://github.com/climateguard/CG-Anem#official-library-for-cg-anem-by-climateguard)Official CG-Anem library by ClimateGuard
+# [](https://github.com/climateguard/CG-Anem#official-library-for-cg-anem-by-climateguard)NonOfficial CG-Anem library by ClimateGuard
 
 **CG-Anem is an ultracompact I2C-connectable thermal anemometer module based on NTC thermistors.**
 
