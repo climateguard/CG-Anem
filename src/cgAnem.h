@@ -66,7 +66,6 @@ public:
 
     // Fields of data, for update use data_update() function
     float temperature = -255;     // temperature
-    float coldtemperature = -255; // coldtemperature
     float hottemperature = -255;  // hottemperature
     float airConsumption = -255;  // flow consumption
     float airflowRate = -255;     // flow rate
@@ -83,9 +82,8 @@ public:
     uint8_t getFactoryId3();
     uint8_t getFactoryId4();
     float getFirmwareVersion();
-//    float getTemperature();
-    float getColdTemperature();
-    float getHotTemperature();
+    float getAmbientTemperature();
+    float getHotendTemperature();
     float getheatPower();
     float getVoltageSupply();
     float getAirflowRate();
