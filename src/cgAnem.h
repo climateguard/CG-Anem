@@ -83,7 +83,7 @@ public:
     uint8_t getFactoryId3();
     uint8_t getFactoryId4();
     float getFirmwareVersion();
-    float getTemperature();
+//    float getTemperature();
     float getColdTemperature();
     float getHotTemperature();
     float getheatPower();
