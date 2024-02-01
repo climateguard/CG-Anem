@@ -28,9 +28,8 @@ bool CG_Anem::init()
 /*get new necessary data*/
 bool CG_Anem::data_update()
 {
-    /*temperature = getTemperature();*/
-    coldtemperature = getColdTemperature();
-    hottemperature = getHotTemperature();
+    ambtemperature = getAmbientTemperature();
+    hottemperature = getHotendTemperature();
     airflowRate = getAirflowRate();
     airConsumption = calculateAirConsumption();
     heatPower = getheatPower();
@@ -127,8 +126,8 @@ float CG_Anem::getheatPower()
     return tmp;
 }
 
-/*get current Coldend Temperature*/
-float CG_Anem::getColdTemperature()
+/*get current Ambient Temperature*/
+float CG_Anem::getAmbientTemperature()
 {
     uint8_t raw[2];
     if (register_read_byte((uint8_t)i2c_reg_TEMP_COLD_H, &raw[0]))
@@ -143,7 +142,7 @@ float CG_Anem::getColdTemperature()
 }
 
 /*get current Hotend Temperature*/
-float CG_Anem::getHotTemperature()
+float CG_Anem::getHotendTemperature()
 {
     uint8_t raw[2];
     if (register_read_byte((uint8_t)i2c_reg_TEMP_HOT_H, &raw[0]))
