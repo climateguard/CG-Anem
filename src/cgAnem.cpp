@@ -28,7 +28,7 @@ bool CG_Anem::init()
 /*get new necessary data*/
 bool CG_Anem::data_update()
 {
-    ambtemperature = getAmbientTemperature();
+    temperature = getAmbientTemperature();
     hottemperature = getHotendTemperature();
     airflowRate = getAirflowRate();
     airConsumption = calculateAirConsumption();
