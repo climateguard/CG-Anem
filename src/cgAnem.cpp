@@ -69,29 +69,29 @@ bool CG_Anem::register_write_byte(uint8_t regAddr, uint8_t regData)
 /*Get factory_id_1.*/
 uint8_t CG_Anem::getFactoryId1()
 {
-    register_read_byte(uint8_t(i2c_reg_FACTORY_ID_1), &_factory_id_1);
-    return _factory_id_1;
+    register_read_byte(uint8_t(i2c_reg_FACTORY_ID_1), &_factoryid1);
+    return _factoryid1;
 }
 
 /*Get factory_id_2.*/
 uint8_t CG_Anem::getFactoryId2()
 {
-    register_read_byte(uint8_t(i2c_reg_FACTORY_ID_2), &_factory_id_2);
-    return _factory_id_2;
+    register_read_byte(uint8_t(i2c_reg_FACTORY_ID_2), &_factoryid2);
+    return _factoryid2;
 }
 
 /*Get factory_id_3.*/
 uint8_t CG_Anem::getFactoryId3()
 {
-    register_read_byte(uint8_t(i2c_reg_FACTORY_ID_3), &_factory_id_3);
-    return _factory_id_3;
+    register_read_byte(uint8_t(i2c_reg_FACTORY_ID_3), &_factoryid3);
+    return _factoryid3;
 }
 
 /*Get factory_id_4.*/
 uint8_t CG_Anem::getFactoryId4()
 {
-    register_read_byte(uint8_t(i2c_reg_FACTORY_ID_4), &_factory_id_4);
-    return _factory_id_4;
+    register_read_byte(uint8_t(i2c_reg_FACTORY_ID_4), &_factoryid4);
+    return _factoryid4;
 }
 
 /*Get chip id, default value: 0x11.*/
