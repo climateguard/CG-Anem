@@ -88,6 +88,7 @@ long CG_Anem::getFactory()
 	
 //    register_read_byte(uint8_t(i2c_reg_FACTORY), &_factory);
 //    return _factory;
+    return -255;
 }
 
 ///*Get factory_id_1.*/
