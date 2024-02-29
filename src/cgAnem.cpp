@@ -78,11 +78,13 @@ long CG_Anem::getFactory()
                 {
 	  	    if (register_read_byte((uint8_t)i2c_reg_FACTORY_ID_4, &raw[3]))
                     {
-                        return ((raw[0] << 24) | ((raw[1] << 16) | ((raw[2] << 8) | raw[3]);
+                        long tmp =  ((raw[0] << 24) | ((raw[1] << 16) | ((raw[2] << 8) | raw[3]);
+			return tmp;
                     }
 		}
 	    }
         }
+
 	
 //    register_read_byte(uint8_t(i2c_reg_FACTORY), &_factory);
 //    return _factory;
