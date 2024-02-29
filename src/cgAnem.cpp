@@ -29,12 +29,12 @@ bool CG_Anem::init()
 /*get new necessary data*/
 bool CG_Anem::data_update()
 {
-    temperature = getAmbientTemperature();
-    hottemperature = getHotendTemperature();
-    airflowRate = getAirflowRate();
-    airConsumption = calculateAirConsumption();
-    heatPower = getheatPower();
-    voltagesupply = getVoltageSupply();
+    AmbientTemperature = getAmbientTemperature();
+    HotendTemperature = getHotendTemperature();
+    AirFlowRate = getAirFlowRate();
+    AirConsumption = calculateAirConsumption();
+    HeatPower = getHeatPower();
+    VoltageSupply = getVoltageSupply();
     return getSensorStatus() ? false : true; // check data relevance
 }
 
@@ -139,7 +139,7 @@ float CG_Anem::getVoltageSupply()
 }
 
 /*Get getheatPower.*/
-float CG_Anem::getheatPower()
+float CG_Anem::getHeatPower()
 {
     register_read_byte(uint8_t(i2c_reg_PWR_WT), &_heatpwr);
  /*   float tmp = _heatpwr / 10.0;  */
@@ -178,7 +178,7 @@ float CG_Anem::getHotendTemperature()
 }
 
 /*get current flow rate*/
-float CG_Anem::getAirflowRate()
+float CG_Anem::getAirFlowRate()
 {
     uint8_t raw[2];
     if (register_read_byte((uint8_t)i2c_reg_WIND_H, &raw[0]))
@@ -192,17 +192,17 @@ float CG_Anem::getAirflowRate()
 }
 
 /*set duct area for rate consumption calculation, if not setted, the airFlowConsumption  variable will be -255*/
-void CG_Anem::set_duct_area(float area)
+void CG_Anem::set_Duct_Area(float area)
 {
-    ductArea = area;
+    DuctArea = area;
 }
 
 /*calculate flow consumption*/
 float CG_Anem::calculateAirConsumption()
 {
-    if (ductArea > -0.01 && airflowRate != -255)
+    if (DuctArea > -0.01 && airFlowRate != -255)
     {
-        return 6 * airflowRate * ductArea * 0.06;
+        return 6 * airFlowRate * DuctArea * 0.06;
     }
     return -255;
 }
