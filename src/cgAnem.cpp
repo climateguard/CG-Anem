@@ -202,7 +202,7 @@ float CG_Anem::calculateAirConsumption()
 {
     if (DuctArea > -0.01 && AirFlowRate != -255)
     {
-        return 6 * airFlowRate * DuctArea * 0.06;
+        return 6 * AirFlowRate * DuctArea * 0.06;
     }
     return -255;
 }
