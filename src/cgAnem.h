@@ -4,7 +4,7 @@
 #include <Arduino.h>
 #include <Wire.h>
 /*I2C set*/
-#define I2C_FREQ 100000
+#define I2C_FREQ 200000
 #define ANEM_I2C_ADDR 0x11
 #define I2C_TIMEOUT 1000
 #define I2C_PULL_UP GPIO_PULLUP_ENABLE
@@ -60,7 +60,7 @@ private:
 //    uint8_t _factoryid2;
 //    uint8_t _factoryid3;
 //    uint8_t _factoryid4;
-    long _factory;
+//    long _factory;
 
 public:
     CG_Anem(uint8_t sensorAddress);
@@ -79,7 +79,7 @@ public:
     bool init();
     bool data_update(void);
     uint8_t getChipId();
-    long getFactory();
+//    long getFactory();
 //    uint8_t getFactoryId1();
 //    uint8_t getFactoryId2();
 //    uint8_t getFactoryId3();
