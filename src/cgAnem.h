@@ -53,8 +53,8 @@ private:
     uint8_t _sensor_address;
     uint8_t _chip_id;
     uint8_t _firmware_ver;
-    uint8_t _heatpwr;
-    uint8_t _supply_v;
+#    uint8_t _heatpwr;
+#    uint8_t _supply_v;
     uint8_t _factory_id_1;
     uint8_t _factory_id_2;
     uint8_t _factory_id_3;
