@@ -70,6 +70,7 @@ bool CG_Anem::register_write_byte(uint8_t regAddr, uint8_t regData)
 uint8_t CG_Anem::getFactoryId1()
 {
     register_read_byte(uint8_t(i2c_reg_FACTORY_ID_1), &_factory_id_1);
+    int factory_id_1 = _factory_id_1;
     return factory_id_1;
 }
 
@@ -77,6 +78,7 @@ uint8_t CG_Anem::getFactoryId1()
 uint8_t CG_Anem::getFactoryId2()
 {
     register_read_byte(uint8_t(i2c_reg_FACTORY_ID_2), &_factory_id_2);
+    int factory_id_2 = _factory_id_2;
     return factory_id_2;
 }
 
