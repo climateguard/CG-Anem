@@ -55,10 +55,10 @@ private:
     uint8_t _firmware_ver;
     uint8_t _heatpwr;
     uint8_t _supply_v;
-    uint8_t _factory_id_1;
-    uint8_t _factory_id_2;
-    uint8_t _factory_id_3;
-    uint8_t _factory_id_4;
+    uint8_t _factoryid1;
+    uint8_t _factoryid2;
+    uint8_t _factoryid3;
+    uint8_t _factoryid4;
 
 public:
     CG_Anem(uint8_t sensorAddress);
