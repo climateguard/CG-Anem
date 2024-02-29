@@ -18,7 +18,7 @@ bool CG_Anem::init()
     if (Wire.endTransmission(true) != 0)
         return false;
     getFirmwareVersion();
-    getFactory();	
+//    getFactory();	
 //    getFactoryId1();
 //    getFactoryId2();
 //    getFactoryId3();
@@ -66,30 +66,25 @@ bool CG_Anem::register_write_byte(uint8_t regAddr, uint8_t regData)
     return true;
 }
 
-/*Get factory.*/
-long CG_Anem::getFactory()
-{
-        uint8_t raw[4];
-        if (register_read_byte((uint8_t)i2c_reg_FACTORY_ID_1, &raw[0]))
-        {
-            if (register_read_byte((uint8_t)i2c_reg_FACTORY_ID_2, &raw[1]))
-            {
-		if (register_read_byte((uint8_t)i2c_reg_FACTORY_ID_3, &raw[2]))
-                {
-	  	    if (register_read_byte((uint8_t)i2c_reg_FACTORY_ID_4, &raw[3]))
-                    {
-                        long factory =  (raw[0] << 24) | (raw[1] << 16) | (raw[2] << 8) | raw[3];
-			return factory;
-                    }
-		}
-	    }
-        }
-
-	
-//    register_read_byte(uint8_t(i2c_reg_FACTORY), &_factory);
-//    return _factory;
-    return -255;
-}
+///*Get factory.*/
+//long CG_Anem::getFactory()
+//{
+//        uint8_t raw[4];
+//        if (register_read_byte((uint8_t)i2c_reg_FACTORY_ID_1, &raw[0]))
+//        {
+//            if (register_read_byte((uint8_t)i2c_reg_FACTORY_ID_2, &raw[1]))
+//            {
+//		if (register_read_byte((uint8_t)i2c_reg_FACTORY_ID_3, &raw[2]))
+//                {
+//	  	    if (register_read_byte((uint8_t)i2c_reg_FACTORY_ID_4, &raw[3]))
+//                    {
+//                        long factory =  (raw[0] << 24) | (raw[1] << 16) | (raw[2] << 8) | raw[3];
+//			return factory;
+//                    }
+//		}
+//	    }
+//        }
+//}
 
 ///*Get factory_id_1.*/
 //uint8_t CG_Anem::getFactoryId1()
