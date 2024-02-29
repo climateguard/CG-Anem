@@ -89,7 +89,7 @@ public:
     float getHotendTemperature();
     float getHeatPower();
     float getVoltageSupply();
-    float getAirflowRate();
+    float getAirFlowRate();
     float calculateAirConsumption();
     float getMaxAirFlowRate();
     float getMinAirFlowRate();
