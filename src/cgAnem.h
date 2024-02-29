@@ -12,11 +12,11 @@
 /*I2C set*/
 
 /*I2C REGISTERS ADDRESSES begin*/
-#define i2c_reg_FACTORY 0x00
-//#define i2c_reg_FACTORY_ID_1 0x00
-//#define i2c_reg_FACTORY_ID_2 0x01
-//#define i2c_reg_FACTORY_ID_3 0x02
-//#define i2c_reg_FACTORY_ID_4 0x03
+//#define i2c_reg_FACTORY 0x00
+#define i2c_reg_FACTORY_ID_1 0x00
+#define i2c_reg_FACTORY_ID_2 0x01
+#define i2c_reg_FACTORY_ID_3 0x02
+#define i2c_reg_FACTORY_ID_4 0x03
 #define i2c_reg_VERSION 0x04
 #define i2c_reg_WHO_I_AM 0x05
 #define i2c_reg_STATUS 0x06
