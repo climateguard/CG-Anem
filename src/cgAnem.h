@@ -79,7 +79,7 @@ public:
     bool init();
     bool data_update(void);
     uint8_t getChipId();
-    uint8_t getFactory();
+    long getFactory();
 //    uint8_t getFactoryId1();
 //    uint8_t getFactoryId2();
 //    uint8_t getFactoryId3();
