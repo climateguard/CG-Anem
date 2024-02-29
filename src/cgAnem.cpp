@@ -29,12 +29,12 @@ bool CG_Anem::init()
 /*get new necessary data*/
 bool CG_Anem::data_update()
 {
-    AmbientTemperature = getAmbientTemperature();
-    HotendTemperature = getHotendTemperature();
+ //   AmbientTemperature = getAmbientTemperature();
+ //   HotendTemperature = getHotendTemperature();
     AirFlowRate = getAirFlowRate();
     AirConsumption = calculateAirConsumption();
-    HeatPower = getHeatPower();
-    VoltageSupply = getVoltageSupply();
+ //   HeatPower = getHeatPower();
+ //   VoltageSupply = getVoltageSupply();
     return getSensorStatus() ? false : true; // check data relevance
 }
 
