@@ -18,10 +18,11 @@ bool CG_Anem::init()
     if (Wire.endTransmission(true) != 0)
         return false;
     getFirmwareVersion();
-    getFactoryId1();
-    getFactoryId2();
-    getFactoryId3();
-    getFactoryId4();
+    getFactory();	
+//    getFactoryId1();
+//    getFactoryId2();
+//    getFactoryId3();
+//    getFactoryId4();
     return true;
 }
 
@@ -65,8 +66,29 @@ bool CG_Anem::register_write_byte(uint8_t regAddr, uint8_t regData)
     return true;
 }
 
+/*Get factory.*/
+long CG_Anem::getFactory()
+{
+        uint8_t raw[4];
+        if (register_read_byte((uint8_t)i2c_reg_FACTORY_ID_1, &raw[0]))
+        {
+            if (register_read_byte((uint8_t)i2c_reg_FACTORY_ID_2, &raw[1]))
+            {
+		if (register_read_byte((uint8_t)i2c_reg_FACTORY_ID_3, &raw[2]))
+                {
+	  	    if (register_read_byte((uint8_t)i2c_reg_FACTORY_ID_4, &raw[3]))
+                    {
+                        return ((raw[0] << 24) | ((raw[1] << 16) | ((raw[2] << 8) | raw[3]);
+                    }
+		}
+	    }
+        }
+	
+//    register_read_byte(uint8_t(i2c_reg_FACTORY), &_factory);
+//    return _factory;
+}
 
-/*Get factory_id_1.*/
+/*/*Get factory_id_1.*/
 uint8_t CG_Anem::getFactoryId1()
 {
     register_read_byte(uint8_t(i2c_reg_FACTORY_ID_1), &_factoryid1);
@@ -93,7 +115,8 @@ uint8_t CG_Anem::getFactoryId4()
     register_read_byte(uint8_t(i2c_reg_FACTORY_ID_4), &_factoryid4);
     return _factoryid4;
 }
-
+*/
+	
 /*Get chip id, default value: 0x11.*/
 uint8_t CG_Anem::getChipId()
 {
