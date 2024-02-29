@@ -67,13 +67,13 @@ public:
     ~CG_Anem();
 
     // Fields of data, for update use data_update() function
-    float temperature = -255;     // temperature
-    float hottemperature = -255;  // hottemperature
-    float airConsumption = -255;  // flow consumption
-    float airflowRate = -255;     // flow rate
-    float heatPower = -255;       // heater power
-    float voltagesupply = -255;   // voltage supply
-    float ductArea;               // duct area in sm^2. Necessary to set a value in the main code for air flow calculations
+    float AmbientTemperature = -255;     // temperature
+    float HotendTemperature = -255;      // hottemperature
+    float AirConsumption = -255;         // flow consumption
+    float AirFlowRate = -255;            // flow rate
+    float HeatPower = -255;              // heater power
+    float VoltageSupply = -255;          // voltage supply
+    float DuctArea;                      // duct area in sm^2. Necessary to set a value in the main code for air flow calculations
 
     // Methods for get or set data
     bool init();
@@ -87,7 +87,7 @@ public:
     float getFirmwareVersion();
     float getAmbientTemperature();
     float getHotendTemperature();
-    float getheatPower();
+    float getHeatPower();
     float getVoltageSupply();
     float getAirflowRate();
     float calculateAirConsumption();
@@ -102,7 +102,7 @@ public:
     bool resetMinMaxValues();
     bool enableWDT();
     bool disableWDT();
-    void set_duct_area(float area);
+    void set_Duct_Area(float area);
 };
 
 #endif // _CGANEM_H_
