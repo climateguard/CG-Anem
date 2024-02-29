@@ -200,7 +200,7 @@ void CG_Anem::set_Duct_Area(float area)
 /*calculate flow consumption*/
 float CG_Anem::calculateAirConsumption()
 {
-    if (DuctArea > -0.01 && airFlowRate != -255)
+    if (DuctArea > -0.01 && AirFlowRate != -255)
     {
         return 6 * airFlowRate * DuctArea * 0.06;
     }
