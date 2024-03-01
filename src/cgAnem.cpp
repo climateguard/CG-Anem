@@ -41,7 +41,7 @@ bool CG_Anem::data_update()
     AirConsumption = calculateAirConsumption();
     HeatPower = getHeatPower();
     VoltageSupply = getVoltageSupply();
-    return getSensorStatus() ? false : true; // check data relevance
+    return getSensorStatusUP() ? false : true; // check data relevance
 }
 
 /*read 1 byte from register*/
