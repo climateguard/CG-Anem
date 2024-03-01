@@ -31,7 +31,7 @@ bool CG_Anem::data_update()
 {
  //   AmbientTemperature = getAmbientTemperature();
  //   HotendTemperature = getHotendTemperature();
- //   AirFlowRate = getAirFlowRate();
+    AirFlowRate = getAirFlowRate();
     AirConsumption = calculateAirConsumption();
  //   HeatPower = getHeatPower();
  //   VoltageSupply = getVoltageSupply();
