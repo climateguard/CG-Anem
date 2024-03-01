@@ -6,17 +6,12 @@
 /*I2C set*/
 #define I2C_FREQ 200000
 #define ANEM_I2C_ADDR 0x11
-#define I2C_TIMEOUT 1000
+#define I2C_TIMEOUT 5000
 #define I2C_PULL_UP GPIO_PULLUP_ENABLE
 #define ACK_CHECK_EN 0x01
 /*I2C set*/
 
 /*I2C REGISTERS ADDRESSES begin*/
-//#define i2c_reg_FACTORY 0x00
-#define i2c_reg_FACTORY_ID_1 0x00
-#define i2c_reg_FACTORY_ID_2 0x01
-#define i2c_reg_FACTORY_ID_3 0x02
-#define i2c_reg_FACTORY_ID_4 0x03
 #define i2c_reg_VERSION 0x04
 #define i2c_reg_WHO_I_AM 0x05
 #define i2c_reg_STATUS 0x06
@@ -56,11 +51,6 @@ private:
     uint8_t _firmware_ver;
     uint8_t _heatpwr;
     uint8_t _supply_v;
-//    uint8_t _factoryid1;
-//    uint8_t _factoryid2;
-//    uint8_t _factoryid3;
-//    uint8_t _factoryid4;
-//    long _factory;
 
 public:
     CG_Anem(uint8_t sensorAddress);
@@ -85,11 +75,6 @@ public:
     bool init();
     bool data_update(void);
     uint8_t getChipId();
-//    long getFactory();
-//    uint8_t getFactoryId1();
-//    uint8_t getFactoryId2();
-//    uint8_t getFactoryId3();
-//    uint8_t getFactoryId4();
     float getFirmwareVersion();
     float getAmbientTemperature();
     float getHotendTemperature();
