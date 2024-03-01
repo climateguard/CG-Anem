@@ -67,9 +67,9 @@ public:
     ~CG_Anem();
 
     // Fields of data, for update use data_update() function
-    bool SensorStatus;
-    bool SensorOVStatus;
-    bool SensorWDTStatus;
+    bool SensorStatusUP;
+    bool SensorStatusOV;
+    bool SensorStatusWDT;
     float FirmwareVersion = -255;        // FirmwareVersion
     float AmbientTemperature = -255;     // temperature
     float HotendTemperature = -255;      // hottemperature
@@ -99,9 +99,9 @@ public:
     float calculateAirConsumption();
     float getMaxAirFlowRate();
     float getMinAirFlowRate();
-    bool getSensorStatus();
-    bool getSensorOVStatus();
-    bool getSensorWDTStatus();
+    bool getSensorStatusUP();
+    bool getSensorStatusOV();
+    bool getSensorStatusWDT();
     bool register_read_byte(uint8_t regAddr, uint8_t *retrieveData);
     bool register_write_byte(uint8_t regAddr, uint8_t regData);
     bool setI2Caddr(uint8_t newAddr);
