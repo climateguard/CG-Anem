@@ -71,6 +71,8 @@ public:
     float HotendTemperature = -255;      // hottemperature
     float AirConsumption = -255;         // flow consumption
     float AirFlowRate = -255;            // flow rate
+    float MaxAirFlowRate = -255;         // Max flow rate
+    float MinAirFlowRate = -255;         // Min flow rate
     float HeatPower = -255;              // heater power
     float VoltageSupply = -255;          // voltage supply
     float DuctArea;                      // duct area in sm^2. Necessary to set a value in the main code for air flow calculations
