@@ -67,6 +67,10 @@ public:
     ~CG_Anem();
 
     // Fields of data, for update use data_update() function
+    bool SensorStatus;
+    bool SensorOVStatus;
+    bool SensorWDTtatus;
+    float FirmwareVersion = -255;        // FirmwareVersion
     float AmbientTemperature = -255;     // temperature
     float HotendTemperature = -255;      // hottemperature
     float AirConsumption = -255;         // flow consumption
