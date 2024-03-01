@@ -29,7 +29,9 @@ bool CG_Anem::init()
 /*get new necessary data*/
 bool CG_Anem::data_update()
 {
-    SensorWDTStatus = getSensorWDTStatus();
+    SensorStatusUP = getSensorStatusUP();
+    SensorStatusOV = getSensorStatusOV();
+    SensorStatusWDT = getSensorStatusWDT();
     FirmwareVersion = getFirmwareVersion();
     AmbientTemperature = getAmbientTemperature();
     HotendTemperature = getHotendTemperature();
@@ -165,7 +167,7 @@ float CG_Anem::calculateAirConsumption()
 /*get data from status register
  *true - unsteady process, measurements not prepared
  *false - transient process finished, measurements are relevant*/
-bool CG_Anem::getSensorStatus()
+bool CG_Anem::getSensorStatusUP()
 {
     uint8_t statusReg;
     bool stupBit = 0;
@@ -179,7 +181,7 @@ bool CG_Anem::getSensorStatus()
 /*get data from status register stovBit
  *true - overvoltage detected
  *false - supply voltage is normal*/
-bool CG_Anem::getSensorOVStatus()
+bool CG_Anem::getSensorStatusOV()
 {
     uint8_t statusReg;
     bool stovBit = 0;
@@ -193,7 +195,7 @@ bool CG_Anem::getSensorOVStatus()
 /*get data from status register stwdtBit
  *true - wdt enable
  *false - wdt disable*/
-bool CG_Anem::getSensorWDTStatus()
+bool CG_Anem::getSensorStatusWDT()
 {
     uint8_t statusReg;
     bool stwdtBit = 0;
