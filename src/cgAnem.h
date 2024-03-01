@@ -69,7 +69,7 @@ public:
     // Fields of data, for update use data_update() function
     bool SensorStatus;
     bool SensorOVStatus;
-    bool SensorWDTtatus;
+    bool SensorWDTStatus;
     float FirmwareVersion = -255;        // FirmwareVersion
     float AmbientTemperature = -255;     // temperature
     float HotendTemperature = -255;      // hottemperature
