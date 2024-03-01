@@ -29,6 +29,8 @@ bool CG_Anem::init()
 /*get new necessary data*/
 bool CG_Anem::data_update()
 {
+    SensorWDTStatus = getSensorWDTStatus()
+    FirmwareVersion = getFirmwareVersion();
     AmbientTemperature = getAmbientTemperature();
     HotendTemperature = getHotendTemperature();
     AirFlowRate = getAirFlowRate();
