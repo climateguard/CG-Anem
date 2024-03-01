@@ -17,7 +17,8 @@ bool CG_Anem::init()
     Wire.write(i2c_reg_WHO_I_AM);
     if (Wire.endTransmission(true) != 0)
         return false;
-    getFirmwareVersion();
+//    getFirmwareVersion();
+    FirmwareVersion = getFirmwareVersion();
     return true;
 }
 
@@ -27,7 +28,7 @@ bool CG_Anem::data_update()
     SensorStatusUP = getSensorStatusUP();
     SensorStatusOV = getSensorStatusOV();
     SensorStatusWDT = getSensorStatusWDT();
-    FirmwareVersion = getFirmwareVersion();
+//    FirmwareVersion = getFirmwareVersion();
     AmbientTemperature = getAmbientTemperature();
     HotendTemperature = getHotendTemperature();
     AirFlowRate = getAirFlowRate();
