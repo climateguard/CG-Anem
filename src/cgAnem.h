@@ -6,7 +6,7 @@
 /*I2C set*/
 #define I2C_FREQ 200000
 #define ANEM_I2C_ADDR 0x11
-#define I2C_TIMEOUT 5000
+#define I2C_TIMEOUT 1000
 #define I2C_PULL_UP GPIO_PULLUP_ENABLE
 #define ACK_CHECK_EN 0x01
 /*I2C set*/
